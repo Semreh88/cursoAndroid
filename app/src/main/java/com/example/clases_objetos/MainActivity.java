@@ -9,9 +9,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
     private Button btnRegister;
     private Button btnConsult;
+
+    private Usuario obj_usuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +26,6 @@ public class MainActivity extends AppCompatActivity {
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Toast.makeText(MainActivity.this, "Boton Registrar", Toast.LENGTH_LONG).show();
                 Intent intent_register = new Intent(MainActivity.this, Register.class);
                 startActivity(intent_register);
             }
@@ -31,9 +34,20 @@ public class MainActivity extends AppCompatActivity {
         btnConsult.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Toast.makeText(MainActivity.this, "Boton Consultar", Toast.LENGTH_LONG).show();
-                Intent intent_consult = new Intent(MainActivity.this, Consult.class);
-                startActivity(intent_consult);
+                Bundle extras = getIntent().getExtras();
+                if (extras != null) {
+                    ArrayList<String> array = new ArrayList<>();
+                    array = extras.getStringArrayList("data");
+
+                    Intent intent_consult = new Intent(MainActivity.this, Consult.class);
+                    intent_consult.putExtra("data", array);
+                    startActivity(intent_consult);
+                }
+                else {
+                    Intent intent_consult = new Intent(MainActivity.this, Consult.class);
+                    startActivity(intent_consult);
+                }
+
             }
         });
     }
@@ -41,5 +55,6 @@ public class MainActivity extends AppCompatActivity {
     private void inicializar() {
         btnRegister = (Button) findViewById(R.id.btnRegistrarPage);
         btnConsult = (Button) findViewById(R.id.btnConsultarPage);
+        obj_usuario = new Usuario();
     }
 }

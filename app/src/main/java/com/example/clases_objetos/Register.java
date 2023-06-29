@@ -2,11 +2,14 @@ package com.example.clases_objetos;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 
 public class Register extends AppCompatActivity {
 
@@ -26,6 +29,7 @@ public class Register extends AppCompatActivity {
         botonRegistrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 obj_usuario.setIdentificacion(Integer.parseInt(identificacion.getText().toString()));
                 obj_usuario.setNombre(nombre.getText().toString());
                 obj_usuario.setCorreo(correo.getText().toString());
@@ -34,7 +38,13 @@ public class Register extends AppCompatActivity {
                 String cadena_data = obj_usuario.getIdentificacion() + " " + obj_usuario.getNombre()
                         + " " + obj_usuario.getCorreo() + " " + obj_usuario.getEdad();
 
-                Toast.makeText(Register.this, cadena_data, Toast.LENGTH_LONG).show();
+                Toast.makeText(Register.this, "User registered", Toast.LENGTH_SHORT).show();
+
+                Intent intent_main = new Intent(Register.this, MainActivity.class);
+                ArrayList<String> array = new ArrayList<>();
+                array.add(cadena_data);
+                intent_main.putExtra("data", array);
+                startActivity(intent_main);
             }
         });
     }
